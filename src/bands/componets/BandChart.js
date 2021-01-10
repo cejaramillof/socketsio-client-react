@@ -4,16 +4,21 @@ import { Chart } from 'chart.js';
 
 export const BandChart = () => {
   const { socket } = useContext(SocketContext);
+  let chart;
 
   useEffect(() => {
     socket.on('current-bands', (bands) => {
       crearGrafica(bands);
     });
+    return () => socket.off('current-bands');
   }, [socket])
 
   const crearGrafica = (bands = []) => {
     const ctx = document.getElementById('myChart');
-    new Chart(ctx, {
+    if (typeof chart !== "undefined") {
+      chart.destroy();
+    }
+    chart = new Chart(ctx, {
       type: 'horizontalBar',
       data: {
         labels: bands.map(band => band.name),
