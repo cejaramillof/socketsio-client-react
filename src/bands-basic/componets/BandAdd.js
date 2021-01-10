@@ -1,14 +1,13 @@
-import { useContext, useState } from 'react';
-import { SocketContext } from '../context/SocketContext'
+import { useState } from 'react';
 
-export const BandAdd = () => {
+export const BandAdd = ({ crearBanda }) => {
   const [valor, setValor] = useState('');
-  const { socket } = useContext(SocketContext);
 
   const onSubmit = (ev) => {
     ev.preventDefault();
     if (valor.trim().length > 0) {
-      socket.emit('crear-banda', { nombre: valor });
+      // TODO: llamar la función para emitir el evento
+      crearBanda(valor);
       setValor('');
     }
   }
