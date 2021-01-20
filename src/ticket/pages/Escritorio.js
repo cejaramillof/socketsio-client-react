@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Row, Col, Typography, Button, Divider } from 'antd';
 import { CloseCircleOutlined, RightOutlined } from '@ant-design/icons';
+import { SocketContext } from '../context/SocketContext';
 import { useHideMenu } from '../hooks/useHideMenu';
 import { getUsuarioStorage } from '../helpers/getUsuarioStorage';
 import { Redirect, useHistory } from 'react-router-dom';
+
 
 const { Title, Text } = Typography;
 
 export const Escritorio = () => {
   useHideMenu(false);
   const [usuario] = useState(getUsuarioStorage());
+  const { socket } = useContext(SocketContext);
+  const [ticket, setTicket] = useState(null)
   const history = useHistory();
 
   const salir = () => {
@@ -18,7 +22,9 @@ export const Escritorio = () => {
   }
 
   const siguienteTicket = () => {
-    console.log('siguienteTicket');
+    socket.emit('siguiente-ticket-trabajar', usuario, (ticket) => {
+      setTicket(ticket);
+    });
   }
 
   if (!usuario.agente || !usuario.escritorio) {
@@ -40,22 +46,26 @@ export const Escritorio = () => {
             onClick={salir}
           >
             <CloseCircleOutlined />
-            Salir
-          </Button>
+              Salir
+            </Button>
         </Col>
       </Row>
       <Divider />
-      <Row>
-        <Col>
-          <Text>Está atendiendo el ticket número: </Text>
-          <Text
-            style={{ fontSize: 30 }}
-            type="danger"
-          >
-            55
-          </Text>
-        </Col>
-      </Row>
+      {
+        ticket && (
+          <Row>
+            <Col>
+              <Text>Está atendiendo el ticket número: </Text>
+              <Text
+                style={{ fontSize: 30 }}
+                type="danger"
+              >
+                {ticket.numero}
+              </Text>
+            </Col>
+          </Row>
+        )
+      }
       <Row>
         <Col offset={18} span={6} align="right">
           <Button
@@ -64,7 +74,7 @@ export const Escritorio = () => {
             type="primary"
           >
             <RightOutlined />
-            Siguiente
+              Siguiente
             </Button>
         </Col>
       </Row>
