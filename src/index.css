@@ -1,5 +1,6 @@
-@import '~antd/dist/antd.css';
+@import "~antd/dist/antd.css";
 
+/* Tickets APP */
 #components-layout-demo-custom-trigger .trigger {
   font-size: 18px;
   line-height: 64px;
@@ -20,4 +21,24 @@
 
 .site-layout .site-layout-background {
   background: #fff;
+}
+
+/* Maps APP */
+.mapContainer {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  position: absolute;
+}
+
+.info {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  color: white;
+  left: 20px;
+  padding: 10px;
+  position: fixed;
+  top: 20px;
+  z-index: 99;
 }
