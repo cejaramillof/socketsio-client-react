@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { SocketContext } from '../context/SocketContext';
+import { SocketContext } from '../../context/SocketContext';
 
 export const BandList = () => {
   const [bands, setBands] = useState([]);

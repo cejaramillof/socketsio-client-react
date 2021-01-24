@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Button, Col, Row, Typography } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons'
 import { useHideMenu } from '../hooks/useHideMenu';
-import { SocketContext } from '../context/SocketContext';
+import { SocketContext } from '../../context/SocketContext';
 
 const { Title, Text } = Typography;
 

@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { SocketContext } from '../context/SocketContext';
+import { SocketContext } from '../../context/SocketContext';
 
 import { BandAdd } from '../componets/BandAdd';
 import { BandList } from '../componets/BandList';

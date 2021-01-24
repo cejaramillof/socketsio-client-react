@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import { SocketContext } from '../context/SocketContext';
+import { SocketContext } from '../../context/SocketContext';
 import { Chart } from 'chart.js';
 
 export const BandChart = () => {

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Row, Col, Typography, Button, Divider } from 'antd';
 import { CloseCircleOutlined, RightOutlined } from '@ant-design/icons';
-import { SocketContext } from '../context/SocketContext';
+import { SocketContext } from '../../context/SocketContext';
 import { useHideMenu } from '../hooks/useHideMenu';
 import { getUsuarioStorage } from '../helpers/getUsuarioStorage';
 import { Redirect, useHistory } from 'react-router-dom';

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Col, Row, Typography, List, Card, Tag, Divider } from 'antd';
-import { SocketContext } from '../context/SocketContext';
+import { SocketContext } from '../../context/SocketContext';
 import { useHideMenu } from '../hooks/useHideMenu';
 import { getUltimos } from '../helpers/getUltimos';
 

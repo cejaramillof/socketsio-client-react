@@ -6,39 +6,36 @@ import { Subject } from 'rxjs';
 mapboxgl.accessToken = 'pk.eyJ1Ijoia2xlcml0aCIsImEiOiJja2dzOHdteDkwM2tnMndxMWhycnY3Ymh3In0.Zis8hP6HuwcywtgUhfeZoQ';
 
 export const useMapbox = (puntoInicial) => {
+  const [coords, setCoords] = useState(puntoInicial);
   const mapaDiv = useRef();
+  const mapa = useRef();
+  const marcadores = useRef({});
+  const movimientoMarcador = useRef(new Subject());
+  const nuevoMarcador = useRef(new Subject());
+
   const setRef = useCallback((node) => {
     mapaDiv.current = node;
   }, []);
 
-  const marcadores = useRef({});
-
-  const movimientoMarcador = useRef(new Subject());
-  const nuevoMarcador = useRef(new Subject());
-
-  const mapa = useRef();
-  const [coords, setCoords] = useState(puntoInicial);
-
-  const agregarMarcador = useCallback((ev) => {
-    const { lng, lat } = ev.lngLat;
-
+  const agregarMarcador = useCallback((ev, id) => {
+    const { lng, lat } = ev.lngLat || ev;
     const marker = new mapboxgl.Marker();
-    marker.id = v4(); // TODO: si el marcador ya tiene ID
+    marker.id = id ?? v4();
 
     marker
       .setLngLat([lng, lat])
       .addTo(mapa.current)
       .setDraggable(true);
 
-    // Asignamos al objeto de marcadores
     marcadores.current[marker.id] = marker;
 
-    // TODO: si el marcador tiene ID no emitir
-    nuevoMarcador.current.next({
-      id: marker.id,
-      lng,
-      lat
-    });
+    if (!id) {
+      nuevoMarcador.current.next({
+        id: marker.id,
+        lng,
+        lat
+      });
+    }
 
     marker.on('drag', ({ target }) => {
       const { id } = target;
@@ -47,14 +44,19 @@ export const useMapbox = (puntoInicial) => {
     });
   }, [])
 
+  const actualizarPosicion = useCallback(({ id, lng, lat }) => {
+    marcadores.current[id].setLngLat([lng, lat]);
+  }, [])
+
   useEffect(() => {
-    const map = new mapboxgl.Map({
+    // const map = new mapboxgl.Map({ ... })
+    // setMapa(map);
+    mapa.current = new mapboxgl.Map({
       container: mapaDiv.current,
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [puntoInicial.lng, puntoInicial.lat],
       zoom: puntoInicial.zoom
     });
-    mapa.current = map;
   }, [puntoInicial]);
 
   useEffect(() => {
@@ -76,10 +78,12 @@ export const useMapbox = (puntoInicial) => {
 
   return {
     agregarMarcador,
+    actualizarPosicion,
     coords,
     marcadores,
     nuevoMarcador$: nuevoMarcador.current,
     movimientoMarcador$: movimientoMarcador.current,
-    setRef
+    mapaDiv,
+    setRef,
   }
 }

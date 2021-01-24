@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { SocketContext } from '../context/SocketContext'
+import { SocketContext } from '../../context/SocketContext'
 
 export const BandAdd = () => {
   const [valor, setValor] = useState('');
