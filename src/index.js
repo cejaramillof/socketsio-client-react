@@ -5,7 +5,9 @@ import './index.css';
 // import App from './bands-basic/App';
 // import App from './bands/App';
 // import App from './ticket/TicketApp';
-import App from './maps/App';
+// import App from './maps/App';
+import App from './chat/App';
+
 
 ReactDOM.render(
   <React.StrictMode>

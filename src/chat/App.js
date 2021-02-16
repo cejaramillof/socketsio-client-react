@@ -9,7 +9,7 @@ import 'moment/locale/es';
 moment.locale('es');
 
 
-export const App = () => {
+const App = () => {
   return (
     <ChatProvider>
       <AuthProvider>
@@ -20,3 +20,5 @@ export const App = () => {
     </ChatProvider>
   )
 }
+
+export default App;

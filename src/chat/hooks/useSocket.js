@@ -10,8 +10,8 @@ export const useSocket = (serverPath) => {
     const socketTemp = io.connect(serverPath, {
       transports: ['websocket'],
       autoConnect: true,
-      forceNew: true,
-      query: {
+      forceNew: true, // force each user connection will be new
+      query: { // queryparams
         'x-token': token
       }
     });
